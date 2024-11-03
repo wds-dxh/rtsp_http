@@ -17,50 +17,93 @@ import argparse  # 新增导入
 app = Flask(__name__)
 
 # 定义全局变量保存最新帧
-global_frame = None
+global_frames = {}  # 用于存储多个视频流的最新帧
 
-def update_frame(video_url):  # 修改函数签名
-    global global_frame
-    # 使用OpenCV捕获摄像头
+def update_frame1(video_url):
+    global global_frames
     camera = cv2.VideoCapture(video_url)
     while True:
         success, frame = camera.read()
         if not success:
             break
         else:
-            # 将帧编码为JPEG格式
-            # frame = cv2.resize(frame, (640, 480))
             ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
-            global_frame = buffer.tobytes()
+            global_frames[1] = buffer.tobytes()
+
+def update_frame2(video_url):
+    global global_frames
+    camera = cv2.VideoCapture(video_url)
+    while True:
+        success, frame = camera.read()
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
+            global_frames[2] = buffer.tobytes()
+
+def update_frame3(video_url):
+    global global_frames
+    camera = cv2.VideoCapture(video_url)
+    while True:
+        success, frame = camera.read()
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
+            global_frames[3] = buffer.tobytes()
+
+def update_frame4(video_url):
+    global global_frames
+    camera = cv2.VideoCapture(video_url)
+    while True:
+        success, frame = camera.read()
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
+            global_frames[4] = buffer.tobytes()
 
 # 解析命令行参数
 parser = argparse.ArgumentParser(description='RTSP to HTTP video streaming')
-parser.add_argument('--url', type=str, required=True, help='RTSP video stream URL')
+parser.add_argument('--urls', nargs=4, required=True, help='RTSP video stream URLs')
 args = parser.parse_args()
 
-# 在应用启动时启动后台线程
-threading.Thread(target=update_frame, args=(args.url,), daemon=True).start()
+# 为每个视频流启动一个线程
+threading.Thread(target=update_frame1, args=(args.urls[0],), daemon=True).start()
+threading.Thread(target=update_frame2, args=(args.urls[1],), daemon=True).start()
+threading.Thread(target=update_frame3, args=(args.urls[2],), daemon=True).start()
+threading.Thread(target=update_frame4, args=(args.urls[3],), daemon=True).start()
 
-def generate_frames():
+def generate_frames(stream_id):
     while True:
-        if global_frame is None:
+        if stream_id not in global_frames or global_frames[stream_id] is None:
             continue
-        # 使用生成器函数输出帧
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + global_frames[stream_id] + b'\r\n')
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/video_feed')
-def video_feed():
-    # 使用Response对象包装生成器函数，以便将其作为视频流输出
-    return Response(generate_frames(),
+@app.route('/video_feed1')
+def video_feed1():
+    return Response(generate_frames(1),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_feed2')
+def video_feed2():
+    return Response(generate_frames(2),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_feed3')
+def video_feed3():
+    return Response(generate_frames(3),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_feed4')
+def video_feed4():
+    return Response(generate_frames(4),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    #让外部可以访问
-    app.run( host='::' ,port=5001)
-    # app.run( host='0.0.0.0' ,port=5001)
+    app.run(host='::', port=5001)

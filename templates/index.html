@@ -2,7 +2,7 @@
  * @Author: wds-dxh wdsnpshy@163.com
  * @Date: 2024-05-06 14:39:48
  * @LastEditors: wds-dxh wdsnpshy@163.com
- * @LastEditTime: 2024-11-03 12:15:46
+ * @LastEditTime: 2024-11-03 14:22:18
  * @FilePath: /rtsp_http/templates/index.html
  * @Description:
  * 微信: 15310638214 
@@ -21,11 +21,21 @@
 </head>
 <body>
     <h1>视频推流结果</h1>
-    <img src="{{ url_for('video_feed') }}" width="320" height="240">
+    <div>
+        <h2>视频流1</h2>
+        <img src="{{ url_for('video_feed1') }}" width="320" height="240">
+    </div>
+    <div>
+        <h2>视频流2</h2>
+        <img src="{{ url_for('video_feed2') }}" width="320" height="240">
+    </div>
+    <div>
+        <h2>视频流3</h2>
+        <img src="{{ url_for('video_feed3') }}" width="320" height="240">
+    </div>
+    <div>
+        <h2>视频流4</h2>
+        <img src="{{ url_for('video_feed4') }}" width="320" height="240">
+    </div>
 </body>
-<!--使用video标签播放视频-->
-<!-- <h1>视频推流结果</h1>
-<video src="{{ url_for('video_feed') }}" controls="controls" width="320" height="240"></video>  -->
-
-
 </html>

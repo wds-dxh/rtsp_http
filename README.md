@@ -2,7 +2,7 @@
  * @Author: wds-dxh wdsnpshy@163.com
  * @Date: 2024-11-03 12:13:58
  * @LastEditors: wds-dxh wdsnpshy@163.com
- * @LastEditTime: 2024-11-03 12:16:14
+ * @LastEditTime: 2024-11-03 14:24:03
  * @FilePath: /rtsp_http/README.md
  * @Description: 
  * 微信: 15310638214 
@@ -31,16 +31,16 @@
 
    在终端中，导航到 `main.py` 文件所在的目录。
 
-   使用以下命令运行程序，注意将 `YOUR_RTSP_URL` 替换为实际的 RTSP 视频流地址：
+   使用以下命令运行程序，注意将 `YOUR_RTSP_URL1`、`YOUR_RTSP_URL2`、`YOUR_RTSP_URL3` 和 `YOUR_RTSP_URL4` 替换为实际的 RTSP 视频流地址：
 
    ```bash
-   python main.py --url YOUR_RTSP_URL
+   python main.py --urls YOUR_RTSP_URL1 YOUR_RTSP_URL2 YOUR_RTSP_URL3 YOUR_RTSP_URL4
    ```
 
    例如：
 
    ```bash
-   python main.py --url rtsp://example.com/stream
+   python main.py --urls rtsp://example.com/stream1 rtsp://example.com/stream2 rtsp://example.com/stream3 rtsp://example.com/stream4
    ```
 
 3. **访问视频流**：
