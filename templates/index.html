@@ -1,0 +1,31 @@
+<!--
+ * @Author: wds-dxh wdsnpshy@163.com
+ * @Date: 2024-05-06 14:39:48
+ * @LastEditors: wds-dxh wdsnpshy@163.com
+ * @LastEditTime: 2024-11-03 12:15:46
+ * @FilePath: /rtsp_http/templates/index.html
+ * @Description:
+ * 微信: 15310638214 
+ * 邮箱：wdsnpshy@163.com 
+ * Copyright (c) 2024 by ${wds-dxh}, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--适配手机屏幕-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>后端视频推流</title>
+</head>
+<body>
+    <h1>视频推流结果</h1>
+    <img src="{{ url_for('video_feed') }}" width="320" height="240">
+</body>
+<!--使用video标签播放视频-->
+<!-- <h1>视频推流结果</h1>
+<video src="{{ url_for('video_feed') }}" controls="controls" width="320" height="240"></video>  -->
+
+
+</html>
